@@ -1,0 +1,79 @@
+[gd_scene load_steps=11 format=3 uid="uid://bkvlngfvanvkd"]
+
+[ext_resource type="Script" uid="uid://c32ggnk4n7trw" path="res://Scripts/GameManager.gd" id="1_jta3l"]
+[ext_resource type="PackedScene" uid="uid://bn4vs5pede8mu" path="res://Scences/player.tscn" id="2_nbkwn"]
+[ext_resource type="AudioStream" uid="uid://ca0kudbp3cqpw" path="res://Aseets/AssetBundle/Audio/坏小子思哥特.mp3" id="2_qk82f"]
+[ext_resource type="Texture2D" uid="uid://0djlxhlcji7j" path="res://Aseets/Sprites/ForestBackground.png" id="2_y6ldt"]
+[ext_resource type="PackedScene" uid="uid://prmlpad5vdcy" path="res://Scences/slime.tscn" id="3_y6ldt"]
+[ext_resource type="PackedScene" uid="uid://8bbu4fm70nid" path="res://Scences/audio.tscn" id="4_nbkwn"]
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_7vbm1"]
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_y6ldt"]
+distance = 8.0
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_nbkwn"]
+normal = Vector2(0.49999997, -0.8660254)
+distance = -2.6226044e-06
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_am073"]
+distance = -15.0
+
+[node name="World" type="Node2D" node_paths=PackedStringArray("spawn_timer")]
+y_sort_enabled = true
+script = ExtResource("1_jta3l")
+slime_scene = ExtResource("3_y6ldt")
+spawn_timer = NodePath("Timer")
+
+[node name="AudioListener2D" parent="." instance=ExtResource("4_nbkwn")]
+stream = ExtResource("2_qk82f")
+autoplay = true
+parameters/looping = false
+
+[node name="TextureRect" type="TextureRect" parent="."]
+offset_left = -265.0
+offset_top = -141.0
+offset_right = 265.0
+offset_bottom = 139.0
+texture = ExtResource("2_y6ldt")
+stretch_mode = 1
+metadata/_edit_lock_ = true
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(-23, -3)
+zoom = Vector2(0.67, 0.67)
+
+[node name="Player" parent="." instance=ExtResource("2_nbkwn")]
+position = Vector2(-195, 99)
+move_speed = 150.0
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+metadata/_edit_lock_ = true
+
+[node name="down" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2(5, 131)
+shape = SubResource("WorldBoundaryShape2D_7vbm1")
+
+[node name="up" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2(2, 20)
+rotation = 3.1415927
+shape = SubResource("WorldBoundaryShape2D_y6ldt")
+
+[node name="left" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2(-261, 38)
+rotation = 1.0471976
+shape = SubResource("WorldBoundaryShape2D_nbkwn")
+
+[node name="right" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2(193, 14)
+rotation = -1.5707964
+shape = SubResource("WorldBoundaryShape2D_am073")
+
+[node name="Slime" parent="." instance=ExtResource("3_y6ldt")]
+position = Vector2(231, 76)
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 5.0
+autostart = true
+
+[connection signal="timeout" from="Timer" to="." method="_spawn_slime_timeout"]
