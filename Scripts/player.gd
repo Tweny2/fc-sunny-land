@@ -1,6 +1,6 @@
 extends CharacterBody2D
 
-# =========================CONST.=====================
+# =========================CONSTANT=====================
 
 
 # =========================VAR=======================
@@ -9,6 +9,12 @@ extends CharacterBody2D
 var is_game_over : bool = false
 @export var bullet_scene : PackedScene
 # =========================FUNC======================
+func _process(_delta: float) -> void:
+	if velocity == Vector2.ZERO or is_game_over:
+		$RunningSFX.stop()
+	elif not $RunningSFX.playing:
+		$RunningSFX.play()
+
 
 func _physics_process(_delta):
 	var input_vector = Input.get_vector("ui_left","ui_right","ui_up","ui_down")
@@ -27,19 +33,20 @@ func _physics_process(_delta):
 	move_and_slide()
 
 func game_over():
-	is_game_over = true
-	
-	await get_tree().create_timer(3).timeout
-	get_tree().reload_current_scene()
-	
+	if not is_game_over:
+		
+		is_game_over = true
+		get_tree().current_scene.show_game_over()
+		$GameOverSFX.play()
+		
+		await get_tree().create_timer(3).timeout
+		get_tree().reload_current_scene()
 
-
-	
-
-
+		
 func _on_fire_timeout() -> void:
 	if velocity != Vector2.ZERO or is_game_over:
 		return
 	var bullet_node = bullet_scene.instantiate()
 	bullet_node.position = position + Vector2(12,7)
 	get_tree().current_scene.add_child(bullet_node)
+	$FireSFX.play()

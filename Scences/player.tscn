@@ -1,8 +1,11 @@
-[gd_scene load_steps=22 format=3 uid="uid://bn4vs5pede8mu"]
+[gd_scene load_steps=25 format=3 uid="uid://bn4vs5pede8mu"]
 
 [ext_resource type="Script" uid="uid://cjlo00e5a42bo" path="res://Scripts/player.gd" id="1_fdd1h"]
 [ext_resource type="PackedScene" uid="uid://dl18aqvey3w0m" path="res://Scences/Bullet.tscn" id="2_5xvqy"]
 [ext_resource type="Texture2D" uid="uid://u6mbm78aclbb" path="res://Aseets/Sprites/Foxy.png" id="2_njme2"]
+[ext_resource type="AudioStream" uid="uid://bu32y6awrogy8" path="res://Aseets/Audio/SFX/Gun.mp3" id="4_5xvqy"]
+[ext_resource type="AudioStream" uid="uid://dsewfrpyiagco" path="res://Aseets/Audio/SFX/Running.mp3" id="5_26jep"]
+[ext_resource type="AudioStream" uid="uid://blud4k62pixf4" path="res://Aseets/Audio/SFX/GameOver.mp3" id="5_yfn50"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_tbo0y"]
 atlas = ExtResource("2_njme2")
@@ -155,5 +158,16 @@ shape = SubResource("CapsuleShape2D_fdd1h")
 
 [node name="Timer" type="Timer" parent="."]
 autostart = true
+
+[node name="FireSFX" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("4_5xvqy")
+
+[node name="RunningSFX" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("5_26jep")
+pitch_scale = 1.35
+
+[node name="GameOverSFX" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("5_yfn50")
+volume_db = 5.0
 
 [connection signal="timeout" from="Timer" to="." method="_on_fire_timeout"]

@@ -1,6 +1,8 @@
 [gd_scene load_steps=2 format=3 uid="uid://8bbu4fm70nid"]
 
-[ext_resource type="AudioStream" uid="uid://vf4yicpf55no" path="res://Aseets/AssetBundle/Audio/BGM.ogg" id="1_ssrlf"]
+[ext_resource type="AudioStream" uid="uid://bv0pgagm2jtyl" path="res://Aseets/Audio/BGM/云汐-《洛春赋》.mp3" id="1_o2sc1"]
 
 [node name="AudioListener2D" type="AudioStreamPlayer"]
-stream = ExtResource("1_ssrlf")
+stream = ExtResource("1_o2sc1")
+autoplay = true
+parameters/looping = false

@@ -2,10 +2,10 @@
 
 [ext_resource type="Script" uid="uid://c32ggnk4n7trw" path="res://Scripts/GameManager.gd" id="1_jta3l"]
 [ext_resource type="PackedScene" uid="uid://bn4vs5pede8mu" path="res://Scences/player.tscn" id="2_nbkwn"]
-[ext_resource type="AudioStream" uid="uid://ca0kudbp3cqpw" path="res://Aseets/AssetBundle/Audio/坏小子思哥特.mp3" id="2_qk82f"]
-[ext_resource type="Texture2D" uid="uid://0djlxhlcji7j" path="res://Aseets/Sprites/ForestBackground.png" id="2_y6ldt"]
+[ext_resource type="Texture2D" uid="uid://0djlxhlcji7j" path="res://Aseets/BG/ForestBackground.png" id="2_y6ldt"]
 [ext_resource type="PackedScene" uid="uid://prmlpad5vdcy" path="res://Scences/slime.tscn" id="3_y6ldt"]
-[ext_resource type="PackedScene" uid="uid://8bbu4fm70nid" path="res://Scences/audio.tscn" id="4_nbkwn"]
+[ext_resource type="FontFile" uid="uid://c5lnxuj40tik3" path="res://Aseets/Font/Uranus_Pixel_11Px.ttf" id="7_jta3l"]
+[ext_resource type="FontFile" uid="uid://lnqrdyjpe3xb" path="res://Aseets/Font/文泉驿_位图_宋体_12px.ttf" id="8_3fqxr"]
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_7vbm1"]
 
@@ -19,16 +19,13 @@ distance = -2.6226044e-06
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_am073"]
 distance = -15.0
 
-[node name="World" type="Node2D" node_paths=PackedStringArray("spawn_timer")]
+[node name="World" type="Node2D" node_paths=PackedStringArray("spawn_timer", "score_label", "game_over_label")]
 y_sort_enabled = true
 script = ExtResource("1_jta3l")
 slime_scene = ExtResource("3_y6ldt")
 spawn_timer = NodePath("Timer")
-
-[node name="AudioListener2D" parent="." instance=ExtResource("4_nbkwn")]
-stream = ExtResource("2_qk82f")
-autoplay = true
-parameters/looping = false
+score_label = NodePath("CanvasLayer/ScoreLabel")
+game_over_label = NodePath("CanvasLayer/Game Over Label")
 
 [node name="TextureRect" type="TextureRect" parent="."]
 offset_left = -265.0
@@ -41,10 +38,11 @@ metadata/_edit_lock_ = true
 
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(-23, -3)
-zoom = Vector2(0.67, 0.67)
+zoom = Vector2(0.665, 0.665)
+metadata/_edit_lock_ = true
 
 [node name="Player" parent="." instance=ExtResource("2_nbkwn")]
-position = Vector2(-195, 99)
+position = Vector2(-115, 80)
 move_speed = 150.0
 
 [node name="StaticBody2D" type="StaticBody2D" parent="."]
@@ -70,10 +68,63 @@ rotation = -1.5707964
 shape = SubResource("WorldBoundaryShape2D_am073")
 
 [node name="Slime" parent="." instance=ExtResource("3_y6ldt")]
-position = Vector2(231, 76)
+position = Vector2(230, 45)
+slime_speed = -50
 
 [node name="Timer" type="Timer" parent="."]
 wait_time = 5.0
 autostart = true
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="ScoreLabel" type="Label" parent="CanvasLayer"]
+offset_left = 24.0
+offset_top = 12.0
+offset_right = 89.0
+offset_bottom = 35.0
+theme_override_fonts/font = ExtResource("8_3fqxr")
+theme_override_font_sizes/font_size = 32
+text = "suibian"
+
+[node name="Game Over Label" type="Label" parent="CanvasLayer"]
+visible = false
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -35.0
+offset_top = -8.5
+offset_right = 35.0
+offset_bottom = 8.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(1, 0.7529412, 0.79607844, 1)
+theme_override_colors/font_outline_color = Color(0.7294118, 0.3254902, 0.23921569, 1)
+theme_override_constants/outline_size = 5
+theme_override_fonts/font = ExtResource("7_jta3l")
+theme_override_font_sizes/font_size = 32
+text = "GAME OVER"
+
+[node name="Author Label" type="Label" parent="CanvasLayer/Game Over Label"]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -88.5
+offset_top = 8.5
+offset_right = 135.5
+offset_bottom = 41.5
+grow_horizontal = 0
+grow_vertical = 0
+theme_override_colors/font_color = Color(0.9724266, 0.26544094, 0.48286325, 1)
+theme_override_colors/font_outline_color = Color(0.043137256, 0, 0, 1)
+theme_override_constants/outline_size = 1
+theme_override_fonts/font = ExtResource("7_jta3l")
+theme_override_font_sizes/font_size = 8
+text = "Game By Tweny2"
+horizontal_alignment = 1
 
 [connection signal="timeout" from="Timer" to="." method="_spawn_slime_timeout"]
