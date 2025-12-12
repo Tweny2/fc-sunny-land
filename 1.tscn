@@ -1,8 +1,0 @@
-[gd_scene load_steps=2 format=3 uid="uid://cdru5jxpgmk2u"]
-
-[ext_resource type="PackedScene" uid="uid://105uqubbbsvl" path="res://video_stream_player.tscn" id="1_8xuhg"]
-
-[node name="Camera2D" type="Camera2D"]
-zoom = Vector2(0.395, 0.395)
-
-[node name="VideoStreamPlayer" parent="." instance=ExtResource("1_8xuhg")]

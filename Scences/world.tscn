@@ -127,4 +127,11 @@ theme_override_font_sizes/font_size = 8
 text = "Game By Tweny2"
 horizontal_alignment = 1
 
+[node name="Button" type="Button" parent="."]
+offset_left = 164.0
+offset_top = -123.0
+offset_right = 211.0
+offset_bottom = -92.0
+text = "QUIT"
+
 [connection signal="timeout" from="Timer" to="." method="_spawn_slime_timeout"]

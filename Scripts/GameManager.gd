@@ -1,11 +1,12 @@
 '''
 Godot4.5.1
-v0.2.13.20251209_demo版本
-	# The art of game design
-		- 核心玩法
-		- UI设计
+v1.0.0.20251212_正式版本_Alpha_001
+	# 上传web版游戏到itch.io
+	# ADDS
+		- add quit button
 	# 问题修复
 		- 节点销毁，提高运行效率	
+		- 重新加载主场景时，会闪烁
 		- 岩羊
 '''
 extends Node2D

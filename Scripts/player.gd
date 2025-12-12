@@ -39,8 +39,8 @@ func game_over():
 		get_tree().current_scene.show_game_over()
 		$GameOverSFX.play()
 		
-		await get_tree().create_timer(3).timeout
-		get_tree().reload_current_scene()
+		$RestartTimer.start()
+		
 
 		
 func _on_fire_timeout() -> void:
@@ -50,3 +50,7 @@ func _on_fire_timeout() -> void:
 	bullet_node.position = position + Vector2(12,7)
 	get_tree().current_scene.add_child(bullet_node)
 	$FireSFX.play()
+
+
+func _reload_scene_timer_timeout() -> void:
+	get_tree().reload_current_scene()
